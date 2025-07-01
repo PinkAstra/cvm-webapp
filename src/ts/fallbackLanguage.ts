@@ -52,6 +52,9 @@ const fallbackLanguage : Language = {
 		"kVMButtons_VoteForReset": "Vote For Reset",
 		"kVMButtons_Screenshot": "Screenshot",
 
+		"kVMButtons_SoundOn": "Sound On",
+		"kVMButtons_SoundOff": "Sound Off",
+
 		"kQEMUMonitor": "QEMU Monitor",
 		"kAdminVMButtons_PassVote": "Pass Vote",
 		"kAdminVMButtons_CancelVote": "Cancel Vote",

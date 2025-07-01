@@ -21,6 +21,7 @@
     "dompurify": "^3.2.4",
     "msgpackr": "^1.11.2",
     "nanoevents": "^9.1.0",
+    "opus-decoder": "^0.7.10",
     "simple-keyboard": "^3.8.14"
   },
   "devDependencies": {

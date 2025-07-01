@@ -1,3 +1,0 @@
-[submodule "cvm-protocol"]
-    path = cvm-protocol
-    url = https://github.com/PinkAstra/cvm-protocol

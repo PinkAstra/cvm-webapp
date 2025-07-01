@@ -8,6 +8,7 @@ import Mouse from './mouse.js';
 import GetKeysym from '../keyboard.js';
 import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
+import { OpusPlayer } from '../audio/opus-player.js';
 import { StringLike } from '../StringLike.js';
 import * as msgpack from 'msgpackr';
 // TODO: Properly workspaceify this
@@ -74,6 +75,8 @@ export default class CollabVMClient {
 	private rank: Rank = Rank.Unregistered;
 	private perms: Permissions = new Permissions(0);
 	private voteStatus: VoteStatus | null = null;
+	private audioMute: boolean = true;
+	private opusPlayer: OpusPlayer | undefined;
 	private node: string | null = null;
 	private auth: boolean = false;
 	// events that are used internally and not exposed
@@ -224,6 +227,17 @@ export default class CollabVMClient {
 				img.src = url;
 				break;
 			}
+			case CollabVMProtocolMessageType.audioOpus:
+				if (msg.opusPacket) {
+					const packet = new Uint8Array(msg.opusPacket);
+					if (!this.opusPlayer) {
+						this.opusPlayer = new OpusPlayer();
+					}
+					this.opusPlayer.feed(packet);
+				} else {
+					console.error('[Client] Missing opusPacket in audioOpus message');
+				}
+				break;
 		}
 	}
 
@@ -587,6 +601,15 @@ export default class CollabVMClient {
 	// Take or drop turn
 	turn(taketurn: boolean) {
 		this.send('turn', taketurn ? '1' : '0');
+	}
+
+	sendAudioMute() {
+		this.send('audioMute');
+		this.audioMute = !this.audioMute;
+	}
+
+	getAudioMute() {
+		return this.audioMute;
 	}
 
 	// Send mouse instruction
